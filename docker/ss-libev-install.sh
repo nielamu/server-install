@@ -5,7 +5,7 @@
 # referrer: https://gist.github.com/IvoHu/ea9755d4c4a0e87047d2166521a87560
 
 # create configuration
-bash <(wget -qO- https://raw.githubusercontent.com/NieLamu/server-install/dev/config/ss-libev-config.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/nielamu/server-install/dev/config/ss-libev-config.sh)
 
 sudo docker run \
     -d \
