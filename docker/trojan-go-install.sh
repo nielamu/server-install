@@ -4,7 +4,7 @@
 # referrer: https://github.com/Jrohy/trojan
 
 # create configuration
-bash <(wget -qO- https://raw.githubusercontent.com/nielamu/server-install/dev/config/trojan-go-config.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/config/trojan-go-config.sh)
 
 sudo docker run \
     -d \
