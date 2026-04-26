@@ -1,8 +1,6 @@
 # Across the Great Wall we can reach every corner of the world
 
-## get cert with cloudflare or acme.sh
-
-## install the infras:
+## 1. install the infras
 
 ```bash
 # docker
@@ -11,45 +9,42 @@ bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/de
 bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/base/nginx-install.sh)
 # warp
 bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/base/warp-cli-install.sh)
-```
-
-```bash
-# bbr. referrer: https://github.com/jinwyp/one_click_script
+# bbr
 bash <(curl -Lso- https://git.io/kernel.sh)
 ```
 
-## get the env file:
+## 2. get cert
 
-```bash
-wget -N https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/config/env.sh
+use Cloudflare DNS or acme.sh, cert should be placed at:
+> [my cert](https://github.com/renxiaoyaoo/dotfiles/tree/dev/generate-cert.sh)
+
+```
+~/cert/<your-domain>/<your-domain>.pem
+~/cert/<your-domain>/<your-domain>.key
 ```
 
-> [my private config](https://github.com/renxiaoyaoo/dotfiles/tree/dev/initial-config.sh)
-
-modify the env file, and then:
+## 3. generate `.env`
 
 ```bash
-. env.sh
+bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/generate-env.sh)
 ```
 
-## run the magic scrips
+edit `.env` and fill in the fields marked with `⚠️`, then load:
 
-use docker compose
+```bash
+set -a && . ./.env && set +a
+```
+
+## 4. run the magic scripts
+
+use docker compose:
 
 ```bash
 bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/docker-compose/install-with-docker-compose.sh)
 ```
 
-clear containers
+clear containers:
 
 ```bash
-. env.sh && docker compose down
-```
-
-or use docker directly:
-
-```bash
-bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/docker/gost-warp-install.sh)
-bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/docker/ss-libev-install.sh)
-bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/docker/trojan-go-install.sh)
+docker compose down
 ```

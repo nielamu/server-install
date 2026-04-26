@@ -2,7 +2,7 @@
 
 sudo mkdir -p $TROJAN_GO_CONFIG_PATH
 
-cat <<EOF | sudo tee $TROJAN_GO_CONFIG_PATH/config.json
+cat <<EOF2 | sudo tee $TROJAN_GO_CONFIG_PATH/config.json
 {
     "run_type": "server",
     "local_addr": "0.0.0.0",
@@ -10,7 +10,7 @@ cat <<EOF | sudo tee $TROJAN_GO_CONFIG_PATH/config.json
     "remote_addr": "127.0.0.1",
     "remote_port": 80,
     "password": [
-        "$PASSWORD"
+        "$TROJAN_GO_PASSWORD"
     ],
     "ssl": {
         "cert": "$CERT_FILE",
@@ -21,8 +21,7 @@ cat <<EOF | sudo tee $TROJAN_GO_CONFIG_PATH/config.json
     },
     "websocket": {
         "enabled": true,
-        "path": "$WS_PATH"
+        "path": "$TROJAN_GO_WS_PATH"
     }
 }
-EOF
-
+EOF2

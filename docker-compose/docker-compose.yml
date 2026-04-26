@@ -1,31 +1,55 @@
 version: '3'
 
 services:
+  xray:
+    # referrer: https://github.com/XTLS/Xray-core
+    # referrer: https://xtls.github.io/en/config/inbounds/vless.html
+    # referrer: https://xtls.github.io/en/config/transport.html
+    image: ghcr.io/xtls/xray-core:latest
+    container_name: xray
+    network_mode: host
+    cap_add:
+      - NET_BIND_SERVICE
+    restart: unless-stopped
+    volumes:
+      - ${XRAY_CONFIG_PATH}:${XRAY_CONFIG_PATH}:ro
+    command: run -config ${XRAY_CONFIG_PATH}/config.json
+
+  hysteria2:
+    # referrer: https://github.com/apernet/hysteria
+    # referrer: https://v2.hysteria.network/docs/getting-started/Server/
+    image: tobyxdd/hysteria:latest
+    container_name: hysteria2
+    network_mode: host
+    cap_add:
+      - NET_BIND_SERVICE
+    restart: unless-stopped
+    volumes:
+      - ${CERT_DIR}:${CERT_DIR}:ro
+      - ${HYSTERIA2_CONFIG_PATH}:${HYSTERIA2_CONFIG_PATH}:ro
+    command: server -c ${HYSTERIA2_CONFIG_PATH}/config.yaml
+
   gost-warp:
-    image: gogost/gost
+    # referrer: https://github.com/haoel/haoel.github.io#34-%E7%94%A8-gost-%E8%AE%BE%E7%BD%AE-https-%E6%9C%8D%E5%8A%A1
+    # referrer: https://gost.run/
+    # referrer: https://github.com/haoel/haoel.github.io/issues/83
+    image: gogost/gost:latest
     container_name: gost-warp
     network_mode: host
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${CERT_DIR}:${CERT_DIR}:ro
     command: >
-      -L "mwss://${USERNAME}:${PASSWORD}@:${GOST_WARP_PORT}?path=${WS_PATH}&certFile=${CERT_FILE}&keyFile=${KEY_FILE}"
+      -L "mwss://${GOST_WARP_USERNAME}:${GOST_WARP_PASSWORD}@:${GOST_WARP_PORT}?path=${GOST_WARP_WS_PATH}&certFile=${CERT_FILE}&keyFile=${KEY_FILE}"
       -F "socks://localhost:40000"
 
-  ss-libev:
-    image: teddysun/shadowsocks-libev
-    container_name: ss-libev
-    network_mode: host
-    restart: always
-    volumes:
-      - ${CERT_DIR}:${CERT_DIR}:ro
-      - ${SS_LIBEV_CONFIG_PATH}:${SS_LIBEV_CONFIG_PATH}:ro
-
   trojan-go:
-    image: teddysun/trojan-go
+    # referrer: https://hub.docker.com/r/teddysun/trojan
+    # referrer: https://github.com/Jrohy/trojan
+    image: teddysun/trojan-go:latest
     container_name: trojan-go
     network_mode: host
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${CERT_DIR}:${CERT_DIR}:ro
       - ${TROJAN_GO_CONFIG_PATH}:${TROJAN_GO_CONFIG_PATH}:ro
