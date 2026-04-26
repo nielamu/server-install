@@ -9,6 +9,8 @@ bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/de
 bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/base/nginx-install.sh)
 # warp
 bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/base/warp-cli-install.sh)
+# sysctl
+bash <(wget -qO- https://raw.githubusercontent.com/renxiaoyaoo/server-install/dev/base/sysctl-setup.sh)
 # bbr
 bash <(curl -Lso- https://git.io/kernel.sh)
 ```
