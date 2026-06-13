@@ -18,12 +18,14 @@ bash <(curl -Lso- https://git.io/kernel.sh)
 ## 2. get cert
 
 use Cloudflare DNS or acme.sh, cert should be placed at:
-> [my cert](https://github.com/renxiaoyaoo/dotfiles/tree/dev/generate-cert.sh)
 
 ```
 ~/cert/<your-domain>/<your-domain>.pem
 ~/cert/<your-domain>/<your-domain>.key
 ```
+
+> [my cert](https://github.com/renxiaoyaoo/dotfiles/tree/dev/generate-cert.sh)
+
 
 ## 3. generate `.env`
 
